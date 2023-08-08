@@ -27,15 +27,33 @@ db.once('open', () => {
  */
 async function init() {
   await Users.collection.drop()
-  const user = await Users.create({
+  const user1 = await Users.create({
     name: 'Anshul',
     userId: 'admin',
     email: 'anshul@gmail.com',
     userType: 'ADMIN',
     password: bcrypt.hashSync('Welcome', 8),
   })
-
-  console.log('Admin user created successfully')
+  const user2 = await Users.create({
+    name: 'Kiran',
+    userId: 'customer',
+    email: 'kiran@gmail.com',
+    userType: 'CUSTOMER',
+    password: bcrypt.hashSync('Welcome', 8),
+  })
+  await Movies.collection.drop()
+  const movie = await Movies.create({
+    name: 'Radhe Shyam',
+    description: 'Comedy Drama Movie',
+    casts: ['Prabhas', 'Pooja Hegde'],
+    director: 'Radha Krishna Kumar',
+    trailerUrl: 'http://RadhaShyam/trailers/1',
+    posterUrl: 'http://radhaShyam/posters/1',
+    language: 'Hindi',
+    releaseDate: '11-02-2022',
+    releaseStatus: 'RELEASED',
+  })
+  console.log('Two users created successfully')
 }
 
 require('./Routers/Movie.route')(expressApp)

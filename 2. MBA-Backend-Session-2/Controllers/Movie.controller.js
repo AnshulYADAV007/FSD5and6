@@ -63,6 +63,61 @@ exports.getMovieById = async (req, res) => {
   }
 }
 
-exports.updateMovie = async (req, res) => {}
+exports.updateMovie = async (req, res) => {
+  const savedMovie = await Movies.findOne({ _id: req.params.id })
 
-exports.deleteMovie = async (req, res) => {}
+  if (!savedMovie) {
+    res.status(404).send({
+      message: 'Movie not found',
+    })
+  }
+
+  savedMovie.name = req.body.name != undefined ? req.body.name : savedMovie.name
+  savedMovie.description =
+    req.body.description != undefined
+      ? req.body.description
+      : savedMovie.description
+  savedMovie.casts =
+    req.body.casts != undefined ? req.body.casts : savedMovie.casts
+  savedMovie.director =
+    req.body.director != undefined ? req.body.director : savedMovie.director
+  savedMovie.trailerUrl =
+    req.body.trailerUrl != undefined
+      ? req.body.trailerUrl
+      : savedMovie.trailerUrl
+  savedMovie.posterUrl =
+    req.body.posterUrl != undefined ? req.body.posterUrl : savedMovie.posterUrl
+  savedMovie.language =
+    req.body.language != undefined ? req.body.language : savedMovie.language
+  savedMovie.releaseDate =
+    req.body.releaseDate != undefined
+      ? req.body.releaseDate
+      : savedMovie.releaseDate
+  savedMovie.releaseStatus =
+    req.body.releaseStatus != undefined
+      ? req.body.releaseStatus
+      : savedMovie.releaseStatus
+
+  try {
+    const updatedMovie = await savedMovie.save()
+    res.status(200).send(updatedMovie)
+  } catch (error) {
+    res.status(500).send({
+      message: 'Internal Server Error',
+    })
+  }
+}
+
+exports.deleteMovie = async (req, res) => {
+  try {
+    await Movies.deleteOne({ _id: req.params.id })
+    res.status(200).send({
+      message: 'Movie deleted successfully with id ' + req.params.id + '.',
+    })
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).send({
+      message: 'Internal Server Error',
+    })
+  }
+}
