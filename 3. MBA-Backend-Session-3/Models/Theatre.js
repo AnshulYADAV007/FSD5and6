@@ -1,48 +1,44 @@
+const mongoose = require('mongoose')
 
-
-
-const mongoose = require("mongoose");
-
-
-const TheatreModel = new mongoose.Schema({
-
+const TheatreModel = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     city: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    pinCode:{
-        type: Number,
-        required: true
+    pinCode: {
+      type: Number,
+      required: true,
     },
-    movies : {
-        type : [mongoose.SchemaTypes.ObjectId],
-        ref : "Movie"
+    movies: {
+      type: [mongoose.SchemaTypes.ObjectId],
+      ref: 'Movie',
     },
     createdAt: {
-        type: Date,
-        immutable: true, 
-        default: () => {
-            return Date.now();
-        }
+      type: Date,
+      immutable: true,
+      default: () => {
+        return Date.now()
+      },
     },
     updatedAt: {
-        type: Date,
-        default: () => {
-            return Date.now();
-        }
-    }
+      type: Date,
+      default: () => {
+        return Date.now()
+      },
+    },
+  },
+  {
+    versionKey: false,
+  }
+)
 
-},{
-    versionKey: false 
-})
-
-
-module.exports = mongoose.model("Theatre", TheatreModel);
+module.exports = mongoose.model('Theatre', TheatreModel)
