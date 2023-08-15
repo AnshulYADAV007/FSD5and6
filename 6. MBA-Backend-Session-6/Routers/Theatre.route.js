@@ -20,17 +20,17 @@ module.exports = function (app) {
   )
   app.post(
     '/MovieBooking/api/v1/theatres',
-    [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.verifyToken, authJwt.isAdminOrClient],
     theatreController.addTheatre
   )
   app.put(
     '/MovieBooking/api/v1/theatres/:theatreId',
-    [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.verifyToken, authJwt.isAdminOrClient],
     theatreController.updateTheatre
   )
   app.delete(
     '/MovieBooking/api/v1/theatres/:theatreId',
-    [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.verifyToken, authJwt.isAdminOrClient],
     theatreController.deleteTheatre
   )
   app.delete(

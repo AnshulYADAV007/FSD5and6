@@ -1,7 +1,7 @@
 const userTypesObject = {
   userTypes: {
     customer: 'CUSTOMER',
-    engineer: 'CLIENT',
+    client: 'CLIENT',
     admin: 'ADMIN',
   },
   userStatus: {

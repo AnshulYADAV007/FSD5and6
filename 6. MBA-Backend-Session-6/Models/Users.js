@@ -13,7 +13,6 @@ const UserModel = new mongoose.Schema({
     type: String,
     required: true,
     minLength: 5,
-    unique: true,
   },
   password: {
     type: String,
