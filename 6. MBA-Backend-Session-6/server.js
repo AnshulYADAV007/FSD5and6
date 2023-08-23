@@ -10,8 +10,9 @@ const Theatre = require('./Models/Theatre')
 const Bookings = require('./Models/Bookings')
 const Payments = require('./Models/Payments')
 const Constants = require('./Utills/Constants/userType')
+const cors = require('cors')
 const expressApp = express()
-
+expressApp.use(cors())
 expressApp.use(bodyParser.json())
 expressApp.use(bodyParser.urlencoded({ extended: true }))
 
