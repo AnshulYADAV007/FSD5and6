@@ -1,4 +1,4 @@
-import React, { useState, ReactDOM } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dropdown, DropdownButton } from 'react-bootstrap'
 import { signIn, signUp } from '../../api/auth'
 import { useNavigate } from 'react-router-dom'
@@ -12,8 +12,16 @@ const Login = () => {
   const toggleSignup = (e) => {
     e.preventDefault()
     setShowSignUp(!showSignUp)
-    setUserSignUpData({})
+    if (showSignUp) setUserSignUpData({})
   }
+
+  useEffect(() => {
+    setUserSignUpData({
+      userId: document.getElementById('userId').value,
+      password: document.getElementById('password').value,
+    })
+  }, [])
+
   const redirectUrl = () => {
     if (localStorage.getItem('userType') === 'CUSTOMER') navigate('/')
     else if (localStorage.getItem('userType') === 'CLIENT') navigate('/client')
@@ -87,7 +95,7 @@ const Login = () => {
               placeholder="User Id"
               id="userId"
               className="form-control my-2"
-              onChange={updateSignUpData}
+              onInput={updateSignUpData}
               autoFocus
               required
             />
@@ -96,7 +104,7 @@ const Login = () => {
               placeholder="Password"
               id="password"
               className="form-control my-2"
-              onChange={updateSignUpData}
+              onInput={updateSignUpData}
               autoFocus
               required
             />
@@ -107,7 +115,7 @@ const Login = () => {
                   className="form-control my-2"
                   placeholder="UserName"
                   id="username"
-                  onChange={updateSignUpData}
+                  onInput={updateSignUpData}
                   required
                 />
                 <input
@@ -115,7 +123,7 @@ const Login = () => {
                   className="form-control my-3"
                   placeholder="Email"
                   id="email"
-                  onChange={updateSignUpData}
+                  onInput={updateSignUpData}
                   required
                 />
                 <div className="d-flex justify-content-between align-items-center row">
