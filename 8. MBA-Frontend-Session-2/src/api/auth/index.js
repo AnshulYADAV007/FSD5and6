@@ -4,6 +4,7 @@ export const signIn = async (user) => {
   const URL = '/MovieBooking/api/v1/signIn'
   try {
     const response = await AxiosInstance.post(URL, user)
+    console.log(response.data)
     const { name, userType, userStatus, Token } = response.data
     localStorage.setItem('name', name)
     localStorage.setItem('userType', userType)

@@ -23,6 +23,7 @@ const Login = () => {
   }, [])
 
   const redirectUrl = () => {
+    console.log(localStorage.getItem('userType'))
     if (localStorage.getItem('userType') === 'CUSTOMER') navigate('/')
     else if (localStorage.getItem('userType') === 'CLIENT') navigate('/client')
     else if (localStorage.getItem('userType') === 'ADMIN') navigate('/admin')

@@ -50,20 +50,21 @@ const SignIn = async (req, res) => {
   try {
     if (!userId) {
       res
-        .send('Please Enter A Valid userId for successfully signIn...')
         .status(400)
+        .send('Please Enter A Valid userId for successfully signIn...')
     } else {
       let foundUser = await Users.findOne({ userId: userId })
       if (!foundUser) {
         res
+          .status(400)
           .send(
             'No User Found Against entered userId.please enter a valid userId for successfully logIn...'
           )
-          .status(400)
       } else if (foundUser) {
         let checkForPasword = bcryptJs.compareSync(password, foundUser.password)
         if (!checkForPasword) {
-          res.send('entered password is incorrect...').status(400)
+          res.status(400).send('entered password is incorrect...')
+          return
         }
         let token = jwt.sign({ id: foundUser.userId }, configSecret.secretKey, {
           expiresIn: 86400,
@@ -78,7 +79,7 @@ const SignIn = async (req, res) => {
       }
     }
   } catch (error) {
-    res.send('Error Occured In SignIn...' + error.message).status(500)
+    console.log(error)
   }
 }
 
