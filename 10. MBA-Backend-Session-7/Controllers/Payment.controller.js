@@ -11,7 +11,7 @@ exports.getAllPayments = async (req, res) => {
   if (user.userType !== Constants.userTypesObject.userTypes.admin) {
     const bookings = await Bookings.find({ userId: user._id })
     const bookingIds = bookings.map((booking) => booking._id)
-    queryObj.bookingIds = { $in: bookingIds }
+    queryObj.bookingId = { $in: bookingIds }
   }
 
   try {
@@ -24,8 +24,20 @@ exports.getAllPayments = async (req, res) => {
 }
 
 exports.getPaymentById = async (req, res) => {
+  const user = await Users.findOne({ userId: req.userId })
   try {
     const payments = await Payments.findOne({ _id: req.params.id })
+    const booking = await Bookings.findOne({ _id: payments.bookingId })
+    if (
+      user.userType !== Constants.userTypesObject.userTypes.admin &&
+      booking !== null &&
+      booking.userId !== user._id
+    ) {
+      res.status(404).send({
+        message: 'Access denied',
+      })
+      return
+    }
     res.status(200).send(payments)
   } catch (err) {
     console.log(err.message)
@@ -53,6 +65,12 @@ exports.createPayment = async (req, res) => {
     bookingId: req.body.bookingId,
     amount: req.body.amount,
     status: Constants.bookingAndPaymentObjects.paymentStatus.success,
+  }
+
+  if (req.body.amount < booking.amount) {
+    return res.status(400).send({
+      message: 'Payment amount is less than the booking amount',
+    })
   }
 
   try {

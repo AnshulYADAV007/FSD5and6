@@ -22,4 +22,9 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     bookingController.updateBooking
   )
+  app.delete(
+    '/MovieBooking/api/v1/bookings/:id',
+    [authJwt.verifyToken],
+    bookingController.deleteBooking
+  )
 }

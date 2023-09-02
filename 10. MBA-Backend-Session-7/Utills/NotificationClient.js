@@ -19,12 +19,12 @@ exports.sendEmail = (ticketId, subject, content, emailIds, requester) => {
     },
   }
 
-  client.post(
-    'http://localhost:3030/notifiServ/api/notifications/',
-    args,
-    (data, response) => {
-      console.log('Request Sent')
-      console.log(data)
-    }
-  )
+  // client.post(
+  //   'http://localhost:3030/notifiServ/api/notifications/',
+  //   args,
+  //   (data, response) => {
+  //     console.log('Request Sent')
+  //     console.log(data)
+  //   }
+  // )
 }

@@ -68,6 +68,13 @@ const updateBooking = async (req, res) => {
   const booking = await Booking.findOne({
     _id: req.params.id,
   })
+  if (booking === undefined || booking === null) {
+    res.status(404).send({
+      message: 'Booking not found',
+    })
+    return
+  }
+
   if (
     user.userType != Constants.userTypesObject.userTypes.admin &&
     booking.userId != user._id
@@ -75,6 +82,7 @@ const updateBooking = async (req, res) => {
     res.status(404).send({
       message: 'Access Denied.',
     })
+    return
   }
   booking.theatreId =
     req.body.theatreId != undefined ? req.body.theatreId : booking.theatreId
@@ -96,9 +104,38 @@ const updateBooking = async (req, res) => {
   }
 }
 
+const deleteBooking = async (req, res) => {
+  const user = await Users.findOne({ userId: req.userId })
+  const booking = await Booking.findOne({ _id: req.params.id })
+  if (booking === null) {
+    res.status(404).send({
+      message: 'Booking not found',
+    })
+    return
+  }
+  if (booking.userId != user._id) {
+    res.status(404).send({
+      message: 'Access Denied.',
+    })
+    return
+  }
+  try {
+    await Booking.deleteOne({ _id: req.params.id })
+    res.status(200).send({
+      message: 'Booking deleted successfully',
+    })
+  } catch (err) {
+    console.log(err)
+    res.status(500).send({
+      message: 'Internal error while deleting the booking',
+    })
+  }
+}
+
 module.exports = {
   getAllBookings,
   getBookingById,
   createBooking,
   updateBooking,
+  deleteBooking,
 }
