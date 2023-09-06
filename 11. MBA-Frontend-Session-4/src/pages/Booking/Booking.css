@@ -1,0 +1,31 @@
+.backg {
+    background-image: url('../../assets/img.jpg');
+}
+
+.App {
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    height: 96vh;
+    color: white;
+    font-size: 18px;
+    display: grid;
+    place-items: center;
+}
+
+.ShowCase {
+
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    background: #202429;
+    padding: 12px;
+    border-radius: 4px;
+    color: #7e7e7e;
+}
+
+.ShowCase li {
+    margin: 0 12px;
+}
